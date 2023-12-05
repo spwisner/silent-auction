@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h1>Page Not Found</h1>
+    <p class="text-danger">Bummer.... You just hit a route that doesn't exist.</p>
+    <img src="{{url_for('static', filename='404-page-image.png')}}" alt="404_image"/>
+</div>
+{% endblock %}

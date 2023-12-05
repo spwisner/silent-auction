@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  silent-auction:
+    image: docker.io/library/silent-auction
+    environment:
+      - SECRET_KEY=string
+    ports:
+      - "4000:5000"
+

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<p>
+    {% if bid %}
+        The bid you entered is {{bid}}
+    {% else %}
+        Please enter your bid:
+    {% endif %}
+</p>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.bid.label }} {{ form.bid() }}
+    {{ form.submit() }}
+</form>
+
+{% endblock %}
