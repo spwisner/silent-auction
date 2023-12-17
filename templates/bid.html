@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<p>
-    {% if bid %}
-        The bid you entered is {{bid}}
-    {% else %}
-        Please enter your bid:
-    {% endif %}
-</p>
-
 <form method="POST">
     {{ form.hidden_tag() }}
     {{ form.bid.label }} {{ form.bid() }}
+    <br>
+    {{ form.is_max_bid.label }} {{ form.is_max_bid() }}
+    <br>
+    {{ form.alerts.label }} {{ form.alerts() }}
+    <br>
+    {{ form.interest.label }} {{ form.interest() }}
+    <br>
+    {{ form.feedback.label }} {{ form.feedback() }}
+    <br>
     {{ form.submit() }}
 </form>
-
 {% endblock %}

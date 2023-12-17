@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Bid is successful</h1>
+<p>Thank you for your bid.</p>
+<ul>
+    <li>Bid: {{ session['bid'] }}</li>
+    <li>Is Max Bid: {{ session['is_max_bid'] }}</li>
+    <li>Enable Alerts: {{ session['alerts'] }}</li>
+    <li>Interest Level: {{ session['interest'] }}</li>
+    <li>Feedback: {{ session['feedback'] }}</li>
+</ul>
+{% endblock %}
