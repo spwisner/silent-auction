@@ -1,9 +1,6 @@
 from app import db
 from models import Auction, User, AuctionItem
 
-
-
-
 # # creates all the tables
 # db.create_all()
 

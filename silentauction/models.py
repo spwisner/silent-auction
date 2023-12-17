@@ -1,25 +1,4 @@
-# import os
-# from flask import Flask
-# from wtforms.validators import DataRequired
-# from flask_sqlalchemy import SQLAlchemy
-# from flask_migrate import Migrate # pip install Flask Migrate
-from datetime import datetime
-from app import db
-
-# export FLASK_APP=app.py
-
-# basedir = os.path.abspath(os.path.dirname(__file__))
-# print(basedir)
-#__file__ = app.py
-
-# app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data.sqlite')
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-# db = SQLAlchemy(app)
-# Migrate(app, db) # connects application with database
-
-##########
+from silentauction import db
 
 class Auction (db.Model):
     __tablename__ = "auctions"
@@ -32,7 +11,6 @@ class Auction (db.Model):
 
     def __repr__(self):
         return f"Auction name is {self.name}"
-
 
 class User (db.Model):
     __tablename__ = "users"
