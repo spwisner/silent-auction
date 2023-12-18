@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, flash, request, session, redirect, url_for
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate # pip install Flask Migrate
 
@@ -16,6 +16,8 @@ Migrate(app, db) # connects application with database
 # Register blueprints
 from silentauction.bids.views import bids_blueprint
 from silentauction.users.views import users_blueprint
+from silentauction.auctions.views import auctions_blueprint
 app.register_blueprint(bids_blueprint, url_prefix='/bids')
 app.register_blueprint(users_blueprint, url_prefix='/users')
+app.register_blueprint(auctions_blueprint, url_prefix='/auctions')
 
