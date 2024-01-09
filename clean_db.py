@@ -16,12 +16,12 @@ def delete_all_rows(Model):
         return f"Error: {str(e)}"
 
 
-def clear_db():
+def clean_db():
     delete_all_rows(User)  
     delete_all_rows(Auction)  
     delete_all_rows(Bid)  
     delete_all_rows(AuctionItem)
 
 if __name__ == '__main__':
-    print('Running clear_db')
-    clear_db()
+    print('Running clean_db')
+    clean_db()

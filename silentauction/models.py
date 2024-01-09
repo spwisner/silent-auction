@@ -2,6 +2,7 @@ from silentauction import db,login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
+from silentauction.utils.date_utils import default_auction_end, convert_to_readable_datetime, now_plus_days_datetime
 
 @login_manager.user_loader
 def load_user(user_id): 
@@ -32,20 +33,33 @@ class User (db.Model, UserMixin):
     
     def __repr__(self):
         return f"User has email {self.email}"
-    
+
 class Auction (db.Model):
     __tablename__ = "auctions"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     auction_items = db.relationship('AuctionItem',backref='auction',lazy='dynamic')
-    
+    auction_start = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    auction_end = db.Column(db.DateTime, default=default_auction_end, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
-    def __init__(self, name):
+    def __init__(self, name, auction_start = None, auction_end = None, created_at = None, updated_at = None):
         self.name = name
+        self.auction_start = auction_start or datetime.utcnow()
+        self.auction_end = auction_end or default_auction_end()
+        self.created_at = created_at or datetime.utcnow()
+        self.updated_at = updated_at or datetime.utcnow()
 
     def __repr__(self):
         return f"Auction name is {self.name}"
+    
+    def readable_auction_start(self):
+        return convert_to_readable_datetime(self.auction_start)
+    
+    def readable_auction_end(self):
+        return convert_to_readable_datetime(self.auction_end)
     
     def report_auction_items(self):
         print("Here are the auction items:")
