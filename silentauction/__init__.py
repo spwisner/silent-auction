@@ -2,6 +2,9 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate # pip install Flask Migrate
+from flask_login import LoginManager
+
+login_manager = LoginManager()
 
 app = Flask(__name__)
 
@@ -21,3 +24,6 @@ app.register_blueprint(bids_blueprint, url_prefix='/bids')
 app.register_blueprint(users_blueprint, url_prefix='/users')
 app.register_blueprint(auctions_blueprint, url_prefix='/auctions')
 
+# login
+login_manager.init_app(app)
+login_manager.login_view = 'users.login'

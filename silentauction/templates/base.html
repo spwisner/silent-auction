@@ -51,10 +51,15 @@
 						<a class="nav-link disabled" aria-disabled="true">Disabled</a>
 					</li>
 				</ul>
-				<form class="d-flex" role="search">
-					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">Search</button>
-				</form>
+				{% if current_user.is_authenticated %}
+					<div class="d-flex">
+						<a href="{{url_for('users.logout')}}" class="btn btn-outline-success" tabindex="-1" role="button" aria-disabled="true">Logout</a>
+					</div>
+				{% else %} 
+					<div class="d-flex">
+						<a href="{{url_for('users.login')}}" class="btn btn-outline-success" tabindex="-1" role="button" aria-disabled="true">Login</a>
+					</div>
+				{% endif %}
 			</div>
 		</div>
 	</nav>

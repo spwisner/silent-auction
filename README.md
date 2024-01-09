@@ -21,3 +21,6 @@ Silent auction is a demo Python Flask app where charities can post items for a s
 1. Update the DB with the migration
     - `flask db upgrade` Updates the DB with the migration
         - via docker `docker compose exec silent-auction flask db upgrade`
+1. Removing migration
+    1. Delete migration file
+    1. Run `docker compose exec silent-auction flask db stamp head` to mark the current migration level

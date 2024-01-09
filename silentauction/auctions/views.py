@@ -18,7 +18,6 @@ def create():
     form = CreateForm()
 
     if form.validate_on_submit():
-        print(form.name)
         name = form.name.data
         new_auction = Auction(name)
         db.session.add(new_auction)
