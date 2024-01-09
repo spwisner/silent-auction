@@ -1,6 +1,7 @@
 from silentauction import db,login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id): 
@@ -38,6 +39,7 @@ class Auction (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     auction_items = db.relationship('AuctionItem',backref='auction',lazy='dynamic')
+    
 
     def __init__(self, name):
         self.name = name
@@ -55,7 +57,13 @@ class AuctionItem(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    # Foreign Keys
     auction_id = db.Column(db.Integer,db.ForeignKey('auctions.id'), nullable=False)
+
     # created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     # updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     # auction = db.relationship('Auction', backref='auction', uselist=False) # uselist = False because 1 to 1 and not 1 to many
@@ -64,11 +72,12 @@ class AuctionItem(db.Model):
     # 1 to 1
     # owner = db.relationship('Owner', backref='itemOwner', uselist=False) # uselist = False because 1 to 1 and not 1 to many
 
-    def __init__(self, name, auction_id):
+    def __init__(self, name, auction_id, description, created_at = None, updated_at = None):
         self.name = name
         self.auction_id = auction_id
-        # self.created_at = created_at
-        # self.updated_at = updated_at
+        self.description = description
+        self.created_at = created_at or datetime.utcnow()
+        self.updated_at = updated_at or datetime.utcnow()
 
     def __repr__(self):
         return f"Auction item is {self.name}"

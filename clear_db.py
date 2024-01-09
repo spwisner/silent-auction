@@ -22,4 +22,6 @@ def clear_db():
     delete_all_rows(Bid)  
     delete_all_rows(AuctionItem)
 
-# db.drop_all()
+if __name__ == '__main__':
+    print('Running clear_db')
+    clear_db()
