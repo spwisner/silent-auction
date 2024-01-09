@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, redirect, url_for
 from silentauction.auctions.forms import CreateForm
 from silentauction import db
 from silentauction.models import Auction, AuctionItem
-from silentauction.utils.date_utils import convert_to_readable_datetime
 
 auctions_blueprint = Blueprint('auctions', __name__,
                                template_folder='templates/auctions')
@@ -11,11 +10,12 @@ auctions_blueprint = Blueprint('auctions', __name__,
 def list():
     # Grab a list of auctions from database.
     auctions = Auction.query.all()
+    auctions_count = Auction.query.count()
 
     # auctions = [auctions(obj.auction_start, convert_to_readable_datetime(obj.auction_start)) for obj in auctions]
     # auctions = [auctions(obj.auction_end, convert_to_readable_datetime(obj.auction_end)) for obj in auctions]
 
-    return render_template('list.html', auctions=auctions)
+    return render_template('list.html', auctions=auctions, auctions_count=auctions_count)
 
 
 @auctions_blueprint.route('/create', methods=['POST', 'GET'])

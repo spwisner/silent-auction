@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="jumbotron">
-  <h1>Here are all of the auctions.</h1>
+  <h1>Charity Auctions:</h1>
+
+  {% if auctions_count == 0 %}
+  <p>No auctions are currently available</p>
+  {% else %}
   <table class="table table-dark table-striped-columns">
     <thead>
       <tr>
@@ -22,5 +26,7 @@
       {% endfor %}
     </tbody>
   </table>
+  {% endif %}
+  
 </div>
 {% endblock %}
