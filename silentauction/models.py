@@ -39,21 +39,28 @@ class Auction (db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
+    category = db.Column(db.String(100), default='N/A', nullable=False)
+    description = db.Column(db.String(300))
     auction_items = db.relationship('AuctionItem',backref='auction',lazy='dynamic')
-    auction_start = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    auction_end = db.Column(db.DateTime, default=default_auction_end, nullable=False)
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
-    def __init__(self, name, auction_start = None, auction_end = None, created_at = None, updated_at = None):
+    def __init__(self, name, category, description, created_at = None, updated_at = None):
         self.name = name
-        self.auction_start = auction_start or datetime.utcnow()
-        self.auction_end = auction_end or default_auction_end()
+        self.description = description
+        self.category = self.auction_category(category)
         self.created_at = created_at or datetime.utcnow()
         self.updated_at = updated_at or datetime.utcnow()
 
     def __repr__(self):
         return f"Auction name is {self.name}"
+    
+    def auction_category(self, categoryName):
+        allowed_categories = ['Domestic Needs', 'International Needs', 'Medical', 'Health', 'Youth']
+        if categoryName not in allowed_categories:
+            raise ValueError(f"Invalid category provided. Must include one of the following: {allowed_categories}")
+        return categoryName
     
     def readable_auction_start(self):
         return convert_to_readable_datetime(self.auction_start)
@@ -72,6 +79,8 @@ class AuctionItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text, nullable=False)
+    # auction_start = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    # auction_end = db.Column(db.DateTime, default=default_auction_end, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
@@ -90,6 +99,8 @@ class AuctionItem(db.Model):
         self.name = name
         self.auction_id = auction_id
         self.description = description
+        # self.auction_start = auction_start or datetime.utcnow()
+        # self.auction_end = auction_end or default_auction_end()
         self.created_at = created_at or datetime.utcnow()
         self.updated_at = updated_at or datetime.utcnow()
 

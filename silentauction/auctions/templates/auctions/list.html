@@ -2,6 +2,7 @@
 {% block content %}
 <div class="jumbotron">
   <h1>Charity Auctions:</h1>
+  <p>Total Auctions: {{auctions_count}}</p>
 
   {% if auctions_count == 0 %}
   <p>No auctions are currently available</p>
@@ -11,8 +12,7 @@
       <tr>
         <th scope="col">Auction ID</th>
         <th scope="col">Name</th>
-        <th scope="col">Start Date</th>
-        <th scope="col">End Date</th>
+        <th scope="col">Category</th>
       </tr>
     </thead>
     <tbody>
@@ -20,8 +20,7 @@
         <tr>
           <th scope="row">{{auction.id}}</th>
           <td><a href="/auctions/{{auction.id}}">{{auction.name}}</a></td>
-          <td>{{auction.readable_auction_start()}}</td>
-          <td>{{auction.readable_auction_end()}}</td>
+          <td>{{auction.category}}</td>
         </tr>
       {% endfor %}
     </tbody>
