@@ -48,4 +48,5 @@ def downgrade():
     op.drop_table('bids')
     op.drop_table('auctions')
     op.drop_table('auction_items')
+    # print('done')
     # ### end Alembic commands ###

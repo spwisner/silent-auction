@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for
 from silentauction.auctions.forms import CreateForm
 from silentauction import db
-from silentauction.models import Auction
+from silentauction.models import Auction, AuctionItem
 
 auctions_blueprint = Blueprint('auctions', __name__,
                                template_folder='templates/auctions')
@@ -27,7 +27,16 @@ def create():
     
     return render_template('create.html', form=form)
 
+@auctions_blueprint.route('/<int:record_id>')
+def view_auction(record_id):
+    # Use the record_id in your view logic (e.g., fetch the record from the database)
+    # For now, let's just return a simple response
+    print(record_id)
+    # auction_items = AuctionItem.query.filter_by(auction_id=record_id)
+    auction_items = AuctionItem.query.all()
 
+    return render_template('view.html', auction_items=auction_items)
+    
 
 # def add():
 #     form = AddForm()

@@ -37,12 +37,43 @@ class Auction (db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
+    auction_items = db.relationship('AuctionItem',backref='auction',lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
 
     def __repr__(self):
         return f"Auction name is {self.name}"
+    
+    def report_auction_items(self):
+        print("Here are the auction items:")
+        for auction_item in self.auction_items:
+            print(auction_item.name)
+
+class AuctionItem(db.Model):
+    __tablename__ = 'auction_items'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+    auction_id = db.Column(db.Integer,db.ForeignKey('auctions.id'), nullable=False)
+    # created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    # updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    # auction = db.relationship('Auction', backref='auction', uselist=False) # uselist = False because 1 to 1 and not 1 to many
+    # 1 to many
+    # bids = db.relationship('Bid', backref='auctionItem', lazy='dynamic') #lazy describes how items should be loaded
+    # 1 to 1
+    # owner = db.relationship('Owner', backref='itemOwner', uselist=False) # uselist = False because 1 to 1 and not 1 to many
+
+    def __init__(self, name, auction_id):
+        self.name = name
+        self.auction_id = auction_id
+        # self.created_at = created_at
+        # self.updated_at = updated_at
+
+    def __repr__(self):
+        return f"Auction item is {self.name}"
+    
+
 
 class Bid(db.Model):
     __tablename__ = "bids"
@@ -57,27 +88,5 @@ class Bid(db.Model):
 
     def __repr__(self):
         return f"Bid has id {self.id}"
-
-class AuctionItem(db.Model):
-    __tablename__ = 'auction_items'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text, nullable=False)
-    # created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    # updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    # auction = db.relationship('Auction', backref='auction', uselist=False) # uselist = False because 1 to 1 and not 1 to many
-    # 1 to many
-    # bids = db.relationship('Bid', backref='auctionItem', lazy='dynamic') #lazy describes how items should be loaded
-    # 1 to 1
-    # owner = db.relationship('Owner', backref='itemOwner', uselist=False) # uselist = False because 1 to 1 and not 1 to many
-
-    def __init__(self, name):
-        self.name = name
-        # self.created_at = created_at
-        # self.updated_at = updated_at
-
-    def __repr__(self):
-        return f"Auction item is {self.name} and owner is {self.name}"
-
 
 # db.create_all()

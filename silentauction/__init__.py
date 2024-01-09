@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-Migrate(app, db) # connects application with database
+Migrate(app, db, render_as_batch=True) # connects application with database
 
 # Register blueprints
 from silentauction.bids.views import bids_blueprint
