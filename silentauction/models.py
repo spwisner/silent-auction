@@ -17,16 +17,17 @@ class User (db.Model, UserMixin):
     email = db.Column(db.String(64), unique=True, nullable=False, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
-    # created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    # updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-
-    def __init__(self, first_name, last_name, email, username, password):
+    def __init__(self, first_name, last_name, email, username, password, created_at=None, updated_at=None):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.username = username
         self.password_hash = generate_password_hash(password)
+        self.created_at = created_at or datetime.utcnow()
+        self.updated_at = updated_at or datetime.utcnow()
 
     def check_password(self, password): 
         return check_password_hash(self.password_hash, password)
@@ -41,10 +42,11 @@ class Auction (db.Model):
     name = db.Column(db.Text)
     category = db.Column(db.String(100), default='N/A', nullable=False)
     description = db.Column(db.String(300))
-    auction_items = db.relationship('AuctionItem',backref='auction',lazy='dynamic')
-
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    
+    auction_items = db.relationship('AuctionItem',backref='auction',lazy='dynamic')
+
 
     def __init__(self, name, category, description, created_at = None, updated_at = None):
         self.name = name
