@@ -1,6 +1,45 @@
+import os
 from silentauction import db
-from silentauction.models import Auction, User, AuctionItem
+from silentauction.models import Auction, User, AuctionItem, Photo
 from silentauction.utils.date_utils import now_plus_days_datetime
+
+
+def list_image_files(static_path, target_folder_name):
+    photo_paths = []
+    folder_path = f"{static_path}/{target_folder_name}"
+    for filename in os.listdir(folder_path):
+        print(filename)
+        if filename.lower().endswith(('.png', '.jpeg', '.jpg')):
+            stored_file_name = f"{target_folder_name}/{filename}"
+            print(stored_file_name)
+            photo_paths = [*photo_paths, stored_file_name]
+    return photo_paths
+
+def list_folders(directory_path):
+    folder_names = []
+    for item in os.listdir(directory_path):
+        item_path = os.path.join(directory_path, item)
+        if os.path.isdir(item_path):
+            folder_names.append(item)
+    return folder_names
+
+
+def seed_auction_item_photos(folders_with_images):
+    base_static_path = './silentauction/static/'
+    auction_item_photos_dir_name = 'auction-item-photos'
+
+    photos_to_seeds = []
+
+    for folder in folders_with_images:
+        target_folder_name = f"{auction_item_photos_dir_name}/{folder}"
+        image_files = list_image_files(base_static_path, target_folder_name)
+        photos_to_seeds = [*photos_to_seeds, *image_files]
+    return photos_to_seeds
+
+
+
+
+
 
 # Auction Descriptions
 acs_desc = "The American Cancer Society (ACS) stands as a prominent organization dedicated to the fight against cancer. Founded in 1913 by a group of 15 healthcare professionals and business leaders, the ACS has evolved into a comprehensive force in cancer research, education, advocacy, and patient support. With a mission to eliminate cancer as a major health problem, the organization channels its efforts into groundbreaking research initiatives, striving to discover new treatments and enhance existing ones.\nThe ACS plays a pivotal role in educating the public about cancer prevention, early detection, and the importance of a healthy lifestyle. Through various campaigns, resources, and community outreach programs, the organization empowers individuals with knowledge to make informed decisions about their health. Additionally, the ACS advocates for evidence-based policies to address the broader societal impact of cancer, influencing legislation and fostering a supportive environment for those affected by the disease.\nCommitted to supporting cancer patients and their families, the ACS offers a range of services, including patient transportation to treatment, lodging assistance, and emotional support programs. The organization's Relay For Life events, held nationwide, bring communities together to celebrate survivors, remember loved ones lost, and raise funds for continued research and support services.\nIn summary, the American Cancer Society stands as a beacon of hope in the fight against cancer, leveraging research, education, advocacy, and compassionate support to make strides towards a world free from the burden of this pervasive disease."
@@ -34,6 +73,8 @@ def runSeeds():
     auction_item2 = AuctionItem(name='Signed Liverpool FC Jersey', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00)
     auction_item3 = AuctionItem(name='Red Sox Tickets', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00)
     auction_item4 = AuctionItem(name='John Candy Signed Letter from Warner Brothers', auction_id=auction2.id, description=jc_letter_desc, starting_bid=149.99, bid_interval=15.00)
+
+
     db.session.add_all([
         auction_item1,
         auction_item2,
@@ -41,6 +82,27 @@ def runSeeds():
         auction_item4,
     ])
     db.session.commit()
+
+    # seed photos
+    path = './silentauction/static/auction-item-photos'
+    folders = list_folders(path)
+    results = seed_auction_item_photos(folders)
+
+    photo_items = []
+    for filename in results:
+        if ('jc' in filename): 
+            jc_photo = Photo(filename=filename, category="AUCTION_ITEM", subcategory="ITEM_PHOTO", auction_item_id=auction_item4.id)
+            print(jc_photo.auction_item_id)
+            photo_items = [*photo_items, jc_photo]
+        if ('vase' in filename): 
+            vase_photo = Photo(filename=filename, category="AUCTION_ITEM", subcategory="ITEM_PHOTO", auction_item_id=auction_item1.id)
+            print(vase_photo.auction_item_id)
+            photo_items = [*photo_items, vase_photo]
+
+    db.session.add_all(photo_items)
+    db.session.commit()
+
+
 
 # # creates all the tables
 # db.create_all()

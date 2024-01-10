@@ -9,5 +9,11 @@
     <p>Starting Bid = ${{auction_item.starting_bid}}</p>
     <p>Bid Interval = ${{auction_item.bid_interval}}</p>
   </div>
+  <div>
+    {% for auction_item_photo in auction_item_photos %}
+    <img align='center' src="{{ url_for('static', filename=auction_item_photo.filename) }}">
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
+

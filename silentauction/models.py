@@ -8,6 +8,53 @@ from silentauction.utils.date_utils import default_auction_end, convert_to_reada
 def load_user(user_id): 
     return User.query.get(user_id)
 
+class Photo(db.Model):
+    __tablename__ = 'photos'
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(75), nullable=False)
+    caption = db.Column(db.String(100))
+    category = db.Column(db.String(75), nullable=False)
+    subcategory = db.Column(db.String(75), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    # Foreign Keys
+    auction_id = db.Column(db.Integer,db.ForeignKey('auctions.id'))
+    auction_item_id = db.Column(db.Integer,db.ForeignKey('auction_items.id'))
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+
+    def __init__(self, filename, category, subcategory, caption=None, auction_id=None, auction_item_id=None, user_id=None, created_at=None, updated_at=None):
+        self.filename = filename
+        self.caption = caption
+        self.category = self.photo_category(category)
+        self.subcategory = self.photo_subcategory(category, subcategory)
+        self.auction_id = auction_id
+        self.auction_item_id = auction_item_id
+        self.user_id = user_id
+        self.created_at = created_at or datetime.utcnow()
+        self.updated_at = updated_at or datetime.utcnow()
+
+    def photo_category(self, categoryName):
+        allowed_categories = ['USER', 'AUCTION', 'AUCTION_ITEM']
+        if categoryName not in allowed_categories:
+            raise ValueError(f"Invalid category provided. Must include one of the following: {allowed_categories}")
+        return categoryName
+    
+    def photo_subcategory(self, categoryName, subcategory):
+        allowed_auction_item_subcategories = ['ITEM_PHOTO']
+        if categoryName == 'AUCTION_ITEM' and subcategory not in allowed_auction_item_subcategories:
+            raise ValueError(f"Invalid subcategory provided. Must include one of the following: {allowed_auction_item_subcategories}")
+        
+        allowed_user_subcategories = ['PROFILE_PHOTO']
+        if categoryName == 'USER' and subcategory not in allowed_user_subcategories:
+            raise ValueError(f"Invalid subcategory provided. Must include one of the following: {allowed_user_subcategories}")
+
+        allowed_auction_subcategories = ['LOGO']
+        if categoryName == 'AUCTION' and categoryName not in allowed_auction_subcategories:
+            raise ValueError(f"Invalid subcategory provided. Must include one of the following: {allowed_auction_subcategories}")
+        
+        return subcategory
+
 class User (db.Model, UserMixin):
     __tablename__ = "users"
 
@@ -19,6 +66,9 @@ class User (db.Model, UserMixin):
     password_hash = db.Column(db.String(128))
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    #Foreign Keys
+    user_photos = db.relationship('Photo',backref='user_photos',lazy='dynamic')
 
     def __init__(self, first_name, last_name, email, username, password, created_at=None, updated_at=None):
         self.first_name = first_name
@@ -45,7 +95,9 @@ class Auction (db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     
+    #Foreign Keys
     auction_items = db.relationship('AuctionItem',backref='auction',lazy='dynamic')
+    auction_photos = db.relationship('Photo',backref='auction_photos',lazy='dynamic')
 
 
     def __init__(self, name, category, description, created_at = None, updated_at = None):
@@ -90,6 +142,7 @@ class AuctionItem(db.Model):
 
     # Foreign Keys
     auction_id = db.Column(db.Integer,db.ForeignKey('auctions.id'), nullable=False)
+    auction_item_photos = db.relationship('Photo',backref='auction_item_photos',lazy='dynamic')
 
     # created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     # updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
