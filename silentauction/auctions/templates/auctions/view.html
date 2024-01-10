@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="jumbotron">
-  <h1>{{auction.name}}</h1>
+  <h2>{{auction.name}}</h2>
   <div>
     <p>{{auction.description}}</p>
     <p>Total Items: {{auction_items.count()}}</p>
   </div>
   <ul>
     {% for auction_item in auction_items %}
-    <li>{{auction_item.name}} - #{{auction_item.auction_id}}</li>
+    <li><a href="/auction-items/{{auction_item.id}}">{{auction_item.name}} - #{{auction_item.id}}</a></li>
     {% endfor %}
   </ul>
 </div>

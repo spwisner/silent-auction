@@ -9,6 +9,8 @@ uww_desc = "United Way Worldwide is a renowned international charitable organiza
 
 # Auction Item Descriptions
 vase_desc = "The centerpiece of the upcoming auction is an exquisite vase that captures the essence of timeless elegance and artistic craftsmanship. This remarkable piece, poised to allure discerning collectors and enthusiasts alike, stands as a testament to the mastery of its creator. Crafted with meticulous precision, the vase seamlessly blends classical aesthetics with contemporary sensibilities, making it a rare gem in the realm of decorative art. Fashioned from the finest porcelain, the vase boasts a delicate yet durable form that gracefully curves upward, creating a silhouette reminiscent of classical Grecian urns. Its surface is adorned with intricate hand-painted patterns, each stroke revealing the artisan's dedication to detail. The color palette, a harmonious fusion of soft pastels and rich metallic accents, enhances the vase's allure, adding depth and sophistication to its overall appearance. What sets this vase apart is its unique blend of tradition and innovation. While its design pays homage to historical art movements, the vase incorporates modern elements, making it a versatile and captivating addition to any collection. The artist's signature, discreetly inscribed on the base, further adds to the provenance and exclusivity of this exceptional piece."
+jc_letter_desc = "This framed photograph features a beloved comedy icon and is a must-have for any fan of the movie 'Nothing But Trouble.' The signature of John Candy, who starred in the film, adds a unique touch to this original piece of entertainment memorabilia. The photograph is in excellent condition and would make a great addition to any collection of autographs or photographs. Don't miss out on the opportunity to own this one-of-a-kind item."
+
 
 def runSeeds():
     user1 = User('Steve', 'Wisner', 'test@test.com', 'testUser1', 'test1234!')
@@ -28,9 +30,15 @@ def runSeeds():
     db.session.commit()
 
 
-    auction_item1 = AuctionItem(name='Vase', auction_id=auction1.id, description=vase_desc)
+    auction_item1 = AuctionItem(name='Vase', auction_id=auction1.id, description=vase_desc, starting_bid=10.00, bid_interval=5.00)
+    auction_item2 = AuctionItem(name='Signed Liverpool FC Jersey', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00)
+    auction_item3 = AuctionItem(name='Red Sox Tickets', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00)
+    auction_item4 = AuctionItem(name='John Candy Signed Letter from Warner Brothers', auction_id=auction2.id, description=jc_letter_desc, starting_bid=149.99, bid_interval=15.00)
     db.session.add_all([
-        auction_item1
+        auction_item1,
+        auction_item2,
+        auction_item3,
+        auction_item4,
     ])
     db.session.commit()
 

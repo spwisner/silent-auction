@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+  <h1>#{{auction_item.id}} {{auction_item.name}}</h1>
+  <div>
+    <p>{{auction_item.description}}</p>
+  </div>
+  <div>
+    <p>Starting Bid = ${{auction_item.starting_bid}}</p>
+    <p>Bid Interval = ${{auction_item.bid_interval}}</p>
+  </div>
+</div>
+{% endblock %}

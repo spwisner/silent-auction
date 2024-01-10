@@ -32,13 +32,13 @@ def create():
     
     return render_template('create.html', form=form)
 
-@auctions_blueprint.route('/<int:record_id>')
-def view_auction(record_id):
+@auctions_blueprint.route('/<int:auction_id>')
+def view_auction(auction_id):
     # Use the record_id in your view logic (e.g., fetch the record from the database)
     # For now, let's just return a simple response
 
-    auction = Auction.query.get(record_id)
-    auction_items = AuctionItem.query.filter_by(auction_id=record_id)
+    auction = Auction.query.get(auction_id)
+    auction_items = AuctionItem.query.filter_by(auction_id=auction_id)
     print(type(auction_items))
     return render_template('view.html', auction_items=auction_items, auction=auction)
     
