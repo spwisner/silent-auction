@@ -81,8 +81,10 @@ class AuctionItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    # auction_start = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    # auction_end = db.Column(db.DateTime, default=default_auction_end, nullable=False)
+    starting_bid = db.Column(db.Numeric(precision=10, scale=2), nullable=False, default=0)  # Assuming a precision of 10 and scale of 2 for monetary values
+    bid_interval = db.Column(db.Numeric(precision=10, scale=2), nullable=False, default=0)  # Assuming a precision of 10 and scale of 2 for monetary values
+    auction_start = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    auction_end = db.Column(db.DateTime, default=default_auction_end, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
@@ -97,12 +99,14 @@ class AuctionItem(db.Model):
     # 1 to 1
     # owner = db.relationship('Owner', backref='itemOwner', uselist=False) # uselist = False because 1 to 1 and not 1 to many
 
-    def __init__(self, name, auction_id, description, created_at = None, updated_at = None):
+    def __init__(self, name, auction_id, description, starting_bid, bid_interval, auction_start=None, auction_end=None, created_at=None, updated_at=None):
         self.name = name
         self.auction_id = auction_id
         self.description = description
-        # self.auction_start = auction_start or datetime.utcnow()
-        # self.auction_end = auction_end or default_auction_end()
+        self.starting_bid = starting_bid
+        self.bid_interval = bid_interval
+        self.auction_start = auction_start or datetime.utcnow()
+        self.auction_end = auction_end or default_auction_end()
         self.created_at = created_at or datetime.utcnow()
         self.updated_at = updated_at or datetime.utcnow()
 
