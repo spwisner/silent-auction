@@ -3,7 +3,6 @@ from silentauction import db
 from silentauction.models import Auction, User, AuctionItem, Photo
 from silentauction.utils.date_utils import now_plus_days_datetime
 
-
 def list_image_files(static_path, target_folder_name):
     photo_paths = []
     folder_path = f"{static_path}/{target_folder_name}"
@@ -49,7 +48,8 @@ jc_letter_desc = "This framed photograph features a beloved comedy icon and is a
 
 def runSeeds():
     db.create_all()
-    user1 = User('Steve', 'Wisner', 'test@test.com', 'testUser1', 'test1234!')
+    user1 = User('Steve', 'Wisner', 'steve@test.com', 'testUser1', 'test1234!')
+    user2 = User('Juliana', 'Wisner', 'juliana@test.com', 'jul1234', 'test1234!')
     auction1 = Auction(name='American Cancer Society', category="Health", description=acs_desc)
     auction2 = Auction(name='Feeding America', category="Domestic Needs", description=fa_desc)
     auction3 = Auction(name='United Way Worldwide', category="Domestic Needs", description=uww_desc)
@@ -59,6 +59,7 @@ def runSeeds():
     
     db.session.add_all([
         user1,
+        user2,
         auction1,
         auction2,
         auction3,
@@ -68,7 +69,7 @@ def runSeeds():
 
     auction_item1 = AuctionItem(name='Vase', auction_id=auction1.id, description=vase_desc, starting_bid=10.00, bid_interval=5.00)
     auction_item2 = AuctionItem(name='Signed Liverpool FC Jersey', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00, auction_start=now_plus_days_datetime(days=1, hours=2, seconds=35, minutes=15), auction_end=now_plus_days_datetime(days=45, hours=8, seconds=10, minutes=45))
-    auction_item3 = AuctionItem(name='Red Sox Tickets', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00)
+    auction_item3 = AuctionItem(name='Red Sox Tickets', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00, auction_end=now_plus_days_datetime(days=0, hours=0, seconds=0, minutes=1))
     auction_item4 = AuctionItem(name='John Candy Signed Letter from Warner Brothers', auction_id=auction2.id, description=jc_letter_desc, starting_bid=149.99, bid_interval=15.00)
 
 
@@ -100,36 +101,3 @@ def runSeeds():
     db.session.commit()
 
 
-
-# # creates all the tables
-# db.create_all()
-
-# Seeds
-
-## Auction
-# auction1 = Auction(name='American Cancer Society')
-
-## User
-# user1 = User('Steve', 'Wisner', 'test@test.com', 'testUser1', 'test1234!')
-
-# auctionItem1 = AuctionItem(name='Vase')
-
-# # Seeds
-# item1 = Bid('Coaster', 5)
-# item2 = Bid('Feeder', 14)
-
-# print(item1.id)
-# print(item2.id)
-
-# db.session.add_all([
-#     # auction1, 
-#     # auctionItem1, 
-#     user1
-# ])
-# # db.session.add() --> Can use if want to add only 1
-
-# # saves to db
-# db.session.commit()
-
-# print(item1.id)
-# print(item2.id)
