@@ -7,8 +7,6 @@ from silentauction.users.forms import LoginForm, RegistrationForm
 users_blueprint = Blueprint('users', __name__,
                             template_folder='templates/users')
 
-
-    
 @users_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -23,7 +21,7 @@ def login():
             next = request.args.get('next')
 
             if (next == None or not next[0]== '/'):
-                next = url_for('users.settings')
+                next = url_for('auctions.list')
             return redirect(next)
         else:
             flash('Login failed.  Please try again.')
@@ -52,19 +50,11 @@ def register():
 @login_required
 def logout():
     logout_user()
-    flash("You logged out")
+    flash("Successfully logged out.")
     return redirect(url_for('index'))
 
-
-# @users_blueprint.route('/sign-up-success', methods=['GET', 'POST'])
-# def sign_up_success():
-#     first = request.args.get('first')
-#     last = request.args.get('last')
-#     return render_template('sign-up-success.html', first=first, last=last)
-
-@users_blueprint.route('/settings')
+@users_blueprint.route('/settings/user-profile')
 @login_required
-def settings():
-    print(current_user.email)
-    return render_template('settings.html')
+def settings_user_profile():
+    return render_template('settings_user_profile.html')
 

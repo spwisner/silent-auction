@@ -183,5 +183,3 @@ class Bid(db.Model):
         self.updated_at = updated_at or datetime.utcnow()
         self.auction_item_id = auction_item_id
         self.user_id = user_id
-
-# db.create_all()
