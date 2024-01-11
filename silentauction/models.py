@@ -116,12 +116,6 @@ class Auction (db.Model):
             raise ValueError(f"Invalid category provided. Must include one of the following: {allowed_categories}")
         return categoryName
     
-    def readable_auction_start(self):
-        return convert_to_readable_datetime(self.auction_start)
-    
-    def readable_auction_end(self):
-        return convert_to_readable_datetime(self.auction_end)
-    
     def report_auction_items(self):
         print("Here are the auction items:")
         for auction_item in self.auction_items:
@@ -166,20 +160,28 @@ class AuctionItem(db.Model):
     def __repr__(self):
         return f"Auction item is {self.name}"
     
-
+    def readable_auction_start(self):
+        return convert_to_readable_datetime(self.auction_start)
+    
+    def readable_auction_end(self):
+        return convert_to_readable_datetime(self.auction_end)
 
 class Bid(db.Model):
     __tablename__ = "bids"
     id = db.Column(db.Integer, primary_key=True)
-    # created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    # updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    amount = db.Column(db.Numeric(precision=10, scale=2), nullable=False, default=0)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
-    def __init__(self, name):
-        self.name = name
-        # self.created_at = created_at
-        # self.updated_at = updated_at
+    ## Foreign Keys
+    auction_item_id = db.Column(db.Integer,db.ForeignKey('auction_items.id'), nullable=False)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'), nullable=False)
 
-    def __repr__(self):
-        return f"Bid has id {self.id}"
+    def __init__(self, amount, auction_item_id, user_id, created_at=None, updated_at=None):
+        self.amount = amount
+        self.created_at = created_at or datetime.utcnow()
+        self.updated_at = updated_at or datetime.utcnow()
+        self.auction_item_id = auction_item_id
+        self.user_id = user_id
 
 # db.create_all()

@@ -37,10 +37,6 @@ def seed_auction_item_photos(folders_with_images):
     return photos_to_seeds
 
 
-
-
-
-
 # Auction Descriptions
 acs_desc = "The American Cancer Society (ACS) stands as a prominent organization dedicated to the fight against cancer. Founded in 1913 by a group of 15 healthcare professionals and business leaders, the ACS has evolved into a comprehensive force in cancer research, education, advocacy, and patient support. With a mission to eliminate cancer as a major health problem, the organization channels its efforts into groundbreaking research initiatives, striving to discover new treatments and enhance existing ones.\nThe ACS plays a pivotal role in educating the public about cancer prevention, early detection, and the importance of a healthy lifestyle. Through various campaigns, resources, and community outreach programs, the organization empowers individuals with knowledge to make informed decisions about their health. Additionally, the ACS advocates for evidence-based policies to address the broader societal impact of cancer, influencing legislation and fostering a supportive environment for those affected by the disease.\nCommitted to supporting cancer patients and their families, the ACS offers a range of services, including patient transportation to treatment, lodging assistance, and emotional support programs. The organization's Relay For Life events, held nationwide, bring communities together to celebrate survivors, remember loved ones lost, and raise funds for continued research and support services.\nIn summary, the American Cancer Society stands as a beacon of hope in the fight against cancer, leveraging research, education, advocacy, and compassionate support to make strides towards a world free from the burden of this pervasive disease."
 fa_desc = "Feeding America is a prominent nonprofit organization dedicated to alleviating hunger and food insecurity in the United States. Established in 1979, the organization operates as a nationwide network of food banks and pantries, collaborating with various community-based agencies to distribute meals to those in need. The overarching mission of Feeding America is to combat hunger and ensure that every individual in the country has access to nutritious food.\nThe organization's impact is vast, as it serves millions of Americans annually, including children, seniors, and families facing economic challenges. Feeding America operates strategically, harnessing partnerships with food manufacturers, retailers, and volunteers to secure and distribute billions of pounds of food each year.\nOne notable initiative spearheaded by Feeding America is its focus on addressing food waste. By rescuing surplus food that would otherwise go to waste and redirecting it to those experiencing hunger, the organization contributes to both hunger relief and environmental sustainability.\nIn addition to its emergency food distribution efforts, Feeding America engages in advocacy to address the root causes of hunger, promoting policies and programs that strive to create a hunger-free America. Through its multifaceted approach, Feeding America remains a vital force in the fight against hunger, striving to create a future where every individual has consistent access to nutritious meals and the resources needed to thrive"
@@ -52,6 +48,7 @@ jc_letter_desc = "This framed photograph features a beloved comedy icon and is a
 
 
 def runSeeds():
+    db.create_all()
     user1 = User('Steve', 'Wisner', 'test@test.com', 'testUser1', 'test1234!')
     auction1 = Auction(name='American Cancer Society', category="Health", description=acs_desc)
     auction2 = Auction(name='Feeding America', category="Domestic Needs", description=fa_desc)
@@ -70,7 +67,7 @@ def runSeeds():
 
 
     auction_item1 = AuctionItem(name='Vase', auction_id=auction1.id, description=vase_desc, starting_bid=10.00, bid_interval=5.00)
-    auction_item2 = AuctionItem(name='Signed Liverpool FC Jersey', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00)
+    auction_item2 = AuctionItem(name='Signed Liverpool FC Jersey', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00, auction_start=now_plus_days_datetime(days=1, hours=2, seconds=35, minutes=15), auction_end=now_plus_days_datetime(days=45, hours=8, seconds=10, minutes=45))
     auction_item3 = AuctionItem(name='Red Sox Tickets', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00)
     auction_item4 = AuctionItem(name='John Candy Signed Letter from Warner Brothers', auction_id=auction2.id, description=jc_letter_desc, starting_bid=149.99, bid_interval=15.00)
 

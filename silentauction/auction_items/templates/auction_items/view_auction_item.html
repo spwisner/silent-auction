@@ -6,8 +6,38 @@
     <p>{{auction_item.description}}</p>
   </div>
   <div>
+    <p>Auction Start = {{auction_item.readable_auction_start()}}</p>
+    <p>Auction End = {{auction_item.readable_auction_end()}}</p>
     <p>Starting Bid = ${{auction_item.starting_bid}}</p>
     <p>Bid Interval = ${{auction_item.bid_interval}}</p>
+    <p>Next Bid = ${{next_bid}}</p>
+  </div>
+  <div>
+    {% if is_auction_item_active %}
+      {% if current_user.is_authenticated %}
+      <div class="d-flex">
+        <form action="{{ url_for('auction_items.bid_on_auction_item', auction_item_id=auction_item.id) }}">
+          <input class="visually-hidden" name="hidden_auction_item_id" value="{{auction_item.id}}" />
+          <input class="visually-hidden" name="hidden_bid_amount" value="{{next_bid}}" />
+          <input class="visually-hidden" name="hidden_user_id" value="{{current_user.id}}" />
+          <button type="submit" class="btn btn-primary">Bid</button>
+        </form>
+      </div>
+      {% else %} 
+      <div>
+        <p>You must have an account and be authenticated to bid. Please <a href="{{url_for('users.register')}}">create an account</a> or <a href="{{url_for('users.login')}}">login</a> to continue</p>
+        <button type="button" class="btn btn-primary" disabled>Bid {{auction_item.next_bid}}</button>
+      </div>
+      {% endif %}
+    {% else %}
+    <div>
+      {% if has_auction_ended %}
+      <p>Auction is Closed.</p>
+      {% else %}
+      <p>Auction has not started yet.</p>
+      {% endif %}
+    </div>
+    {% endif %}
   </div>
   <div>
     {% for auction_item_photo in auction_item_photos %}
