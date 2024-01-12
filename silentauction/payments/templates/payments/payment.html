@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h1>Payment</h1>
+    <h2>{{auction_item.name}}</h2>
+    <p>Price = ${{top_bid_summary.amount}}</p>
+    <form action="{{url_for('payments.payment_received', auction_item_id=auction_item.id)}}" method="POST">
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key={{public_key}}
+        data-amount="1999"
+        data-name="Payment for purchase"
+        data-description="Donation"
+        data-locale="auto"
+        data-zip-code="true">
+      </script>
+    </form>
+{% endblock %}

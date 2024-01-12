@@ -5,6 +5,8 @@ services:
     image: docker.io/library/silent-auction
     environment:
       - SECRET_KEY=string
+      - STRIPE_PUBLIC_KEY=pk_test_TYooMQauvdEDq54NiTphI7jx
+      - STRIPE_PRIVATE_KEY=sk_test_4eC39HqLyjWDarjtT1zdp7dc
     ports:
       - "4000:5000"
 

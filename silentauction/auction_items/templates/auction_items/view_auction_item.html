@@ -30,19 +30,20 @@
   <div>
     {% if is_auction_item_active %}
       {% if current_user.is_authenticated %}
-      <div class="d-flex">
-        <form action="{{ url_for('auction_items.bid_on_auction_item', auction_item_id=auction_item.id) }}">
-          <input class="visually-hidden" name="hidden_auction_item_id" value="{{auction_item.id}}" />
-          <input class="visually-hidden" name="hidden_bid_amount" value="{{next_bid}}" />
-          <input class="visually-hidden" name="hidden_user_id" value="{{current_user.id}}" />
-          <button type="submit" class="btn btn-primary">Bid</button>
-        </form>
-      </div>
+        <div class="d-flex">
+          <form action="{{ url_for('auction_items.bid_on_auction_item', auction_item_id=auction_item.id) }}">
+            <input class="visually-hidden" name="hidden_auction_item_id" value="{{auction_item.id}}" />
+            <input class="visually-hidden" name="hidden_bid_amount" value="{{next_bid}}" />
+            <input class="visually-hidden" name="hidden_user_id" value="{{current_user.id}}" />
+            <button type="submit" class="btn btn-primary">Bid</button>
+          </form>
+        </div>
+        <div><a href="{{ url_for('payments.payment', auction_item_id=auction_item.id) }}">Payment Placeholder</a></div>
       {% else %} 
-      <div>
-        <p>You must have an account and be authenticated to bid. Please <a href="{{url_for('users.register')}}">create an account</a> or <a href="{{url_for('users.login')}}">login</a> to continue</p>
-        <button type="button" class="btn btn-primary" disabled>Bid {{auction_item.next_bid}}</button>
-      </div>
+        <div>
+          <p>You must have an account and be authenticated to bid. Please <a href="{{url_for('users.register')}}">create an account</a> or <a href="{{url_for('users.login')}}">login</a> to continue</p>
+          <button type="button" class="btn btn-primary" disabled>Bid {{auction_item.next_bid}}</button>
+        </div>
       {% endif %}
     {% else %}
     <div>

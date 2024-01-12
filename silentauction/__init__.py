@@ -21,10 +21,12 @@ from silentauction.bids.views import bids_blueprint
 from silentauction.users.views import users_blueprint
 from silentauction.auctions.views import auctions_blueprint
 from silentauction.auction_items.views import auction_items_blueprint
+from silentauction.payments.views import payments_blueprint
 app.register_blueprint(bids_blueprint, url_prefix='/bids')
 app.register_blueprint(users_blueprint, url_prefix='/users')
 app.register_blueprint(auctions_blueprint, url_prefix='/auctions')
 app.register_blueprint(auction_items_blueprint, url_prefix='/auction-items')
+app.register_blueprint(payments_blueprint, url_prefix='/payments')
 
 # login
 login_manager.init_app(app)
