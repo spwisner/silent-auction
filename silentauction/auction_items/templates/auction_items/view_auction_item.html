@@ -1,95 +1,98 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="jumbotron">
-  <h1>#{{auction_item.id}} {{auction_item.name}}</h1>
+<div>
+  <h1>{{auction_item.name}}</h1>
+  <h5 class="text-body-secondary">Auction Ends: {{auction_item.readable_auction_end()}}</h5>
+  <div class="d-flex flex-column flex-md-row justify-content-md-evenly w-100 my-2" >
+    {% if auction_item_photos.count() >= 1 %}
+      <div class="d-flex justify-content-center w-100 my-3">
+        <div class="w-75">
+          {% if auction_item_photos.count() == 1 %}
+            <img src="{{ url_for('static', filename=auction_item_photos.first().filename) }}" class="img-fluid d-block" alt="{{auction_item_photos.first().filename}}">
+          {% else %}
+          <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              {% for auction_item_photo in auction_item_photos %}
+                {% if loop.index == 1 %}
+                <div class="carousel-item active">
+                  <img src="{{ url_for('static', filename=auction_item_photo.filename) }}" class="img-fluid d-block w-100" alt="{{auction_item_photo.filename}}">
+                </div>
+                {% else %}
+                <div class="carousel-item">
+                  <img src="{{ url_for('static', filename=auction_item_photo.filename) }}" class="img-fluid d-block w-100" alt="{{auction_item_photo.filename}}">
+                </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    <div class="d-flex align-items-center justify-content-center w-100">
+      <div class="card w-50">
+        <div class="card-body">
+          <h5 class="card-title">Auction Item #{{auction_item.id}}</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary"><a href="{{url_for('auctions.view_auction', auction_id=auction.id)}}">{{auction.name}}</a></h6>
+          <div>
+            <!-- <p>Bid Interval = ${{auction_item.bid_interval}}</p> -->
+            {% if top_bid_summary.bids_count > 0 %}
+              <p>Total bids: {{top_bid_summary.bids_count}}</p>
+              <p>Current bid: {{top_bid_summary.amount}}</p>
+              <p>Bid By: {{top_bid_summary.username}}</p>
+            {% endif %}
+            {% if is_auction_item_active %}
+              {% if current_user.is_authenticated %}
+                <div class="d-flex">
+                  <form action="{{ url_for('auction_items.bid_on_auction_item', auction_item_id=auction_item.id) }}">
+                    <input class="visually-hidden" name="hidden_auction_item_id" value="{{auction_item.id}}" />
+                    <input class="visually-hidden" name="hidden_bid_amount" value="{{next_bid}}" />
+                    <input class="visually-hidden" name="hidden_user_id" value="{{current_user.id}}" />
+                    <button type="submit" class="btn btn-primary">Bid ${{next_bid}}</button>
+                  </form>
+                </div>
+                <div><a href="{{ url_for('payments.payment', auction_item_id=auction_item.id) }}">Payment Placeholder</a></div>
+              {% else %} 
+                <div>
+                  <p>You must have an account and be authenticated to bid. Please <a href="{{url_for('users.register')}}">create an account</a> or <a href="{{url_for('users.login')}}">login</a> to continue</p>
+                  <button type="button" class="btn btn-primary" disabled>Bid {{auction_item.next_bid}}</button>
+                </div>
+              {% endif %}
+            {% else %}
+              <div>
+                {% if has_auction_ended %}
+                  <p>Auction is Closed.</p>
+                  <p>Winner = {{top_bid_summary.username or "N/A"}}</p>
+                  <p>Amount = {{top_bid_summary.amount or "N/A"}}</p>
+                {% else %}
+                  <p>Auction has not started yet.  Please check back later.</p>
+                {% endif %}
+              </div>
+            {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   <div>
+    <h3>Item description</h3>
     <p>{{auction_item.description}}</p>
   </div>
-  <div>
-    <h3>Auction</h3>
-    <p>Auction: <a href="{{url_for('auctions.view_auction', auction_id=auction.id)}}">{{auction.name}}</a></p>
-  </div>
-  <div>
+  <!-- <div>
     <h3>Auction Item</h3>
     <p>Auction Start = {{auction_item.readable_auction_start()}}</p>
     <p>Auction End = {{auction_item.readable_auction_end()}}</p>
     <p>Starting Bid = ${{auction_item.starting_bid}}</p>
     <p>Bid Interval = ${{auction_item.bid_interval}}</p>
-  </div>
-  <div>
-    <h3>Top Bid Summary</h3>
-    <p>Bid Interval = ${{auction_item.bid_interval}}</p>
-    <p>top bid summary-amount = {{top_bid_summary.amount}}</p>
-    <p>top bid summary-username = {{top_bid_summary.username}}</p>
-    <p>top bid summary-bids_count = {{top_bid_summary.bids_count}}</p>
-  </div>
-  <div>
-    <h3>Bid</h3>
-    <p>Next Bid = ${{next_bid}}</p>
-  </div>
-  <div>
-    {% if is_auction_item_active %}
-      {% if current_user.is_authenticated %}
-        <div class="d-flex">
-          <form action="{{ url_for('auction_items.bid_on_auction_item', auction_item_id=auction_item.id) }}">
-            <input class="visually-hidden" name="hidden_auction_item_id" value="{{auction_item.id}}" />
-            <input class="visually-hidden" name="hidden_bid_amount" value="{{next_bid}}" />
-            <input class="visually-hidden" name="hidden_user_id" value="{{current_user.id}}" />
-            <button type="submit" class="btn btn-primary">Bid</button>
-          </form>
-        </div>
-        <div><a href="{{ url_for('payments.payment', auction_item_id=auction_item.id) }}">Payment Placeholder</a></div>
-      {% else %} 
-        <div>
-          <p>You must have an account and be authenticated to bid. Please <a href="{{url_for('users.register')}}">create an account</a> or <a href="{{url_for('users.login')}}">login</a> to continue</p>
-          <button type="button" class="btn btn-primary" disabled>Bid {{auction_item.next_bid}}</button>
-        </div>
-      {% endif %}
-    {% else %}
-    <div>
-      {% if has_auction_ended %}
-      <p>Auction is Closed.</p>
-      <p>Winner = {{top_bid_summary.username or "N/A"}}</p>
-      <p>Amount = {{top_bid_summary.amount or "N/A"}}</p>
-      {% else %}
-      <p>Auction has not started yet.  Please check back later.</p>
-      {% endif %}
-    </div>
-    {% endif %}
-  </div>
-  {% if auction_item_photos.count() >= 1 %}
-    <div class="d-flex justify-content-center w-100">
-      <div class="w-50">
-        {% if auction_item_photos.count() == 1 %}
-          <img src="{{ url_for('static', filename=auction_item_photos.first().filename) }}" class="d-block w-100" alt="{{auction_item_photos.first().filename}}">
-        {% else %}
-        <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            {% for auction_item_photo in auction_item_photos %}
-              {% if loop.index == 1 %}
-              <div class="carousel-item active">
-                <img src="{{ url_for('static', filename=auction_item_photo.filename) }}" class="d-block w-100" alt="{{auction_item_photo.filename}}">
-              </div>
-              {% else %}
-              <div class="carousel-item">
-                <img src="{{ url_for('static', filename=auction_item_photo.filename) }}" class="d-block w-100" alt="{{auction_item_photo.filename}}">
-              </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-        {% endif %}
-      </div>
-    </div>
-  {% endif %}
+  </div> -->
 </div>
 {% endblock %}
 
