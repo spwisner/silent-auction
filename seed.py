@@ -2,6 +2,11 @@ import os
 from silentauction import db
 from silentauction.models import Auction, User, AuctionItem, Photo
 from silentauction.utils.date_utils import now_plus_days_datetime
+import stripe
+from datetime import datetime
+
+public_key = os.getenv('STRIPE_PUBLIC_KEY')
+stripe.api_key = os.getenv('STRIPE_PRIVATE_KEY')
 
 def list_image_files(static_path, target_folder_name):
     photo_paths = []
@@ -72,13 +77,39 @@ def runSeeds():
     auction_item3 = AuctionItem(name='Red Sox Tickets', auction_id=auction1.id, description=vase_desc, starting_bid=99.00, bid_interval=10.00, auction_end=now_plus_days_datetime(days=0, hours=0, seconds=0, minutes=1))
     auction_item4 = AuctionItem(name='John Candy Signed Letter from Warner Brothers', auction_id=auction2.id, description=jc_letter_desc, starting_bid=149.99, bid_interval=15.00)
 
-
     db.session.add_all([
         auction_item1,
         auction_item2,
         auction_item3,
         auction_item4,
     ])
+    db.session.commit()
+
+    #
+    created_product_1 = stripe.Product.create(
+        name=f"Auction Item #{auction_item1.id}: {auction_item1.name}",
+        description=auction_item1.description,
+    )
+    auction_item1.stripe_product_id = created_product_1['id']
+
+    created_product_2 = stripe.Product.create(
+        name=f"Auction Item #{auction_item2.id}: {auction_item2.name}",
+        description=auction_item2.description,
+    )
+    auction_item2.stripe_product_id = created_product_2['id']
+
+    created_product_3 = stripe.Product.create(
+        name=f"Auction Item #{auction_item3.id}: {auction_item3.name}",
+        description=auction_item3.description,
+    )
+    auction_item3.stripe_product_id = created_product_3['id']
+
+    created_product_4 = stripe.Product.create(
+        name=f"Auction Item #{auction_item4.id}: {auction_item4.name}",
+        description=auction_item4.description,
+    )
+    auction_item4.stripe_product_id = created_product_4['id']
+
     db.session.commit()
 
     # seed photos

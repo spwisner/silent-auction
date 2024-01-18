@@ -131,6 +131,8 @@ class AuctionItem(db.Model):
     bid_interval = db.Column(db.Numeric(precision=10, scale=2), nullable=False, default=0)  # Assuming a precision of 10 and scale of 2 for monetary values
     auction_start = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     auction_end = db.Column(db.DateTime, default=default_auction_end, nullable=False)
+    stripe_product_id = db.Column(db.String(100))
+    has_paid = db.Column(db.Boolean, nullable=False, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section id="success" class="hidden">
+  <p>
+    We appreciate your business! A confirmation email will be sent to <span id="customer-email"></span>.
+
+    If you have any questions, please email <a href="mailto:orders@example.com">orders@example.com</a>.
+  </p>
+</section>
+
+<script>
+  async function initialize() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const sessionId = urlParams.get('session_id');
+    const response = await fetch(`/payments/session-status?session_id=${sessionId}`);
+    const session = await response.json();
+      
+    if (session.status == 'open') {
+      const urlToItem = "{{url_for('payments.payment', auction_item_id=auction_item_id)}}"
+      const { origin } = window.location
+      const url_checkout = `${origin}${urlToItem}`
+      window.replace(url_checkout)
+    } else if (session.status == 'complete') {
+      document.getElementById('success').classList.remove('hidden');
+      document.getElementById('customer-email').textContent = session.customer_email
+    }
+  }
+  initialize();
+</script>
+{% endblock %}
