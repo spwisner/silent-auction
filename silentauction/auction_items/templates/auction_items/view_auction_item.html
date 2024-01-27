@@ -48,6 +48,8 @@
               <p>Total bids: {{top_bid_summary.bids_count}}</p>
               <p>Current bid: {{top_bid_summary.amount}}</p>
               <p>Bid By: {{top_bid_summary.username}}</p>
+            {% else %}
+              <p>Total bids: 0</p> 
             {% endif %}
             {% if is_auction_item_active %}
               {% if current_user.is_authenticated %}
