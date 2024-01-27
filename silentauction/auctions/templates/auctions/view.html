@@ -6,10 +6,24 @@
     <p>{{auction.description}}</p>
     <p>Total Items: {{auction_items.count()}}</p>
   </div>
-  <ul>
-    {% for auction_item in auction_items %}
-    <li><a href="/auction-items/{{auction_item.id}}">{{auction_item.name}} - #{{auction_item.id}}</a></li>
-    {% endfor %}
-  </ul>
+  <h3>Auction Items</h3>
+  <div class="d-flex flex-wrap">
+    {% if auction_items.count() > 0 %}
+      {% for auction_item in auction_items %}
+        <div class="card m-2" style="width: 250px">
+          <div class="d-flex justify-content-center">
+            <img style="max-width: 150px;" class="card-img-top p-2" src="{{ url_for('static', filename=auction_photos[loop.index -1].filename) }}"  alt="...">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{auction_item.name}}</h5>
+            <p class="card-text">{{auction_item.description[:97]}}...</p>
+            <a href="/auction-items/{{auction_item.id}}" class="btn btn-primary">View</a>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No auction items. Please check back later.</p>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for
 from silentauction.auctions.forms import CreateForm
 from silentauction import db
-from silentauction.models import Auction, AuctionItem
+from silentauction.models import Auction, AuctionItem, Photo
 
 auctions_blueprint = Blueprint('auctions', __name__,
                                template_folder='templates/auctions')
@@ -32,28 +32,22 @@ def create():
     
     return render_template('create.html', form=form)
 
+default_auction_photo = {
+    "id": -1,
+    "filename": "no-image-available.png",
+    "caption": ""
+}
+
 @auctions_blueprint.route('/<int:auction_id>')
 def view_auction(auction_id):
-    # Use the record_id in your view logic (e.g., fetch the record from the database)
-    # For now, let's just return a simple response
-
     auction = Auction.query.get(auction_id)
     auction_items = AuctionItem.query.filter_by(auction_id=auction_id)
-    print(type(auction_items))
-    return render_template('view.html', auction_items=auction_items, auction=auction)
+    auction_item_ids = [item.id for item in auction_items]
     
+    auction_photos = []
+    for auction_item_id in auction_item_ids:
+        photo = Photo.query.filter_by(auction_item_id = auction_item_id).first()
+        photo = default_auction_photo if photo is None else photo
+        auction_photos = [*auction_photos, photo]
 
-# def add():
-#     form = AddForm()
-
-#     if form.validate_on_submit():
-#         name = form.name.data
-
-#         # Add new Puppy to database
-#         new_pup = Puppy(name)
-#         db.session.add(new_pup)
-#         db.session.commit()
-
-#         return redirect(url_for('puppies.list'))
-
-#     return render_template('add.html',form=form)
+    return render_template('view.html', auction_items=auction_items, auction=auction, auction_photos=auction_photos)

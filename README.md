@@ -24,3 +24,6 @@ Silent auction is a demo Python Flask app where charities can post items for a s
 1. Removing migration
     1. Delete migration file
     1. Run `docker compose exec silent-auction flask db stamp head` to mark the current migration level
+
+#### Seeds
+1. Run `docker compose exec silent-auction python nukepave.py`
