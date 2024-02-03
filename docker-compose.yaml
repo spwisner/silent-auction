@@ -2,11 +2,12 @@ version: '3'
 
 services:
   silent-auction:
-    image: docker.io/library/silent-auction
+    image: docker.io/library/silent-auction:api
     environment:
       - SECRET_KEY=string
-      - STRIPE_PUBLIC_KEY=pk_test_TYooMQauvdEDq54NiTphI7jx
-      - STRIPE_PRIVATE_KEY=sk_test_4eC39HqLyjWDarjtT1zdp7dc
+      - STRIPE_PUBLIC_KEY=pk_test_somevalue
+      - STRIPE_PRIVATE_KEY=sk_test_somevalue
       - DOMAIN=http://localhost:4000
+      - SERVER_TOKEN=testServerToken
     ports:
       - "4000:5000"
