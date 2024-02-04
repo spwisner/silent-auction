@@ -121,7 +121,7 @@ seeds_config = {
                 {
                     "ref_id": "item6",
                     "name": "Julie Vos Penelope Delicate Bracelet",
-                    "description": "Luxurious Julie Vos Penelope Delicate Bracelet Size: Adjustable length 6\" - 6.5\" - 7\". 24K gold plate and freshwater pearls.",
+                    "description": "Luxurious Julie Vos Penelope Delicate Bracelet Size: 24K gold plate and freshwater pearls. The Julie Vos Penelope Delicate Bracelet exudes timeless elegance with its intricate design and refined details. Meticulously crafted, this bracelet features delicate links and a subtle charm, capturing the essence of sophistication. A versatile accessory, the Penelope Bracelet effortlessly elevates any ensemble, making it a classic and stylish choice.",
                     "starting_bid": 60.00,
                     "bid_interval": 3.00,
                     "auction_start": None,
@@ -155,6 +155,45 @@ seeds_config = {
                             "category": "AUCTION_ITEM", 
                             "subcategory": "ITEM_PHOTO"
                         },
+                    ]
+                },
+                {
+                    "ref_id": "item7",
+                    "name": "Tommy Hilfiger Leather Bag",
+                    "description": "The Tommy Hilfiger Leather Bag epitomizes timeless sophistication and contemporary style, showcasing the brand's commitment to quality craftsmanship and design excellence. Crafted from premium leather, this accessory combines durability with a luxurious feel, creating a versatile and enduring piece for fashion enthusiasts. The bag's sleek silhouette and meticulous attention to detail reflect Tommy Hilfiger's iconic aesthetic, making it a statement accessory for any occasion. The brand's signature logo embellishment and polished hardware add a touch of elegance, while the spacious interior offers practical functionality. Whether paired with casual attire or formal wear, the Tommy Hilfiger Leather Bag seamlessly blends fashion-forward design with practical utility, making it a must-have for those who appreciate the fusion of classic and modern elements in their accessories. With its enduring appeal, this leather bag becomes more than just an accessory; it becomes a symbol of refined taste and understated luxury in the world of fashion.",
+                    "starting_bid": 50.00,
+                    "bid_interval": 1.00,
+                    "auction_end": now_plus_days_datetime(days=0, hours=0, seconds=0, minutes=1),
+                    "photos": [
+                        {
+                            "filename": "auction-item-photos/tommy-bag/tommy-bag-1.png",
+                            "category": "AUCTION_ITEM", 
+                            "subcategory": "ITEM_PHOTO"
+                        },
+                        {
+                            "filename": "auction-item-photos/tommy-bag/tommy-bag-2.png",
+                            "category": "AUCTION_ITEM", 
+                            "subcategory": "ITEM_PHOTO"
+                        },
+                        {
+                            "filename": "auction-item-photos/tommy-bag/tommy-bag-3.png",
+                            "category": "AUCTION_ITEM", 
+                            "subcategory": "ITEM_PHOTO"
+                        },
+                    ],
+                    "bids": [
+                        {
+                            "user_ref_id": "user1",
+                            "amount": 50.00
+                        },
+                        {
+                            "user_ref_id": "user2",
+                            "amount": 51.00
+                        },
+                        {
+                            "user_ref_id": "user1",
+                            "amount": 52.00
+                        }
                     ]
                 }
             ]

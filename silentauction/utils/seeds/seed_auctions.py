@@ -1,10 +1,11 @@
 
 from silentauction import db
-from silentauction.models import Auction, AuctionItem, Photo
+from silentauction.models import Auction, AuctionItem, Photo, Bid
 import stripe
 from silentauction.utils.seeds.config import get_seed_config
+from silentauction.utils.seeds.seed_users import lookup_user_by_ref_id
 
-def seed_auctions(should_reset_stripe=False):
+def seed_auctions(should_reset_stripe=False, users=[]):
     config = get_seed_config()
     
     # seed auctions
@@ -34,6 +35,21 @@ def seed_auctions(should_reset_stripe=False):
             db.session.add(new_auction_item)
             db.session.commit()
             print(f"Seeded Item: {new_auction_item.id} - {new_auction_item.name}")
+
+            ## seeds bids
+            bids = auction_item.get('bids', [])
+            print(bids)
+            if len(bids) > 0:
+                for bid in bids:
+                    target_user = lookup_user_by_ref_id(users, bid['user_ref_id'])
+                    new_bid = Bid(
+                        bid['amount'],
+                        new_auction_item.id,
+                        target_user.id,
+                    )
+                    db.session.add(new_bid)
+                    db.session.commit()
+                    print(f"Seeded Bid: {new_bid.id} - {new_bid.amount}")
 
             if should_reset_stripe:
                 # seed stripe product
