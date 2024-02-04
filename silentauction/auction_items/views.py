@@ -20,6 +20,7 @@ def get_top_bid_summary(highest_bid, bids_count):
     top_bid_user = User.query.get(highest_bid.user_id)
     return {
         'amount': highest_bid.amount,
+        'user_id': top_bid_user.id,
         'username': top_bid_user.username,
         'bids_count': bids_count
     }

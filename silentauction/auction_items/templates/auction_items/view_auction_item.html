@@ -83,17 +83,24 @@
                     <button type="submit" class="btn btn-primary">Bid ${{next_bid}}</button>
                   </form>
                 </div>
-                <div><a href="{{ url_for('payments.payment', auction_item_id=auction_item.id) }}">Payment Placeholder</a></div>
               {% else %} 
                 <div>
-                  <p>You must have an account and be authenticated to bid. Please <a href="{{url_for('users.register')}}">create an account</a> or <a href="{{url_for('users.login')}}">login</a> to continue</p>
-                  <button type="button" class="btn btn-primary" disabled>Bid {{auction_item.next_bid}}</button>
+                  <p>You must have an account to bid. Please <a href="{{url_for('users.register')}}">create an account</a> or <a href="{{url_for('users.login')}}">login</a> to continue.</p>
+                  <button type="submit" class="btn btn-primary disabled">Bid ${{next_bid}}</button>
                 </div>
               {% endif %}
             {% else %}
               <div>
                 {% if has_auction_ended %}
-                  <h6 class="mb-1">Auction is Closed.</h6>
+                  {% if current_user.is_authenticated and current_user.id == top_bid_summary.user_id  %}
+                    {% if auction_item.has_paid %}
+                      <h6 class="mb-1">Congratulations on winning! Your payment has been received.</h6>
+                    {% else %}
+                      <h6 class="mb-1">Congratulations on winning! View <a href="{{ url_for('users.items_won') }}">Won Items</a> for payment options.</h6>
+                    {% endif %}
+                  {% else %}
+                    <h6 class="mb-1">Auction is Closed.</h6>
+                  {% endif %}
                 {% else %}
                   <h6 class="mb-1">Auction has not started yet.  Please check back later.</h6>
                 {% endif %}

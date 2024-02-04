@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h1>Won Items</h1>
+    {% if items_won|length == 0 %}
+        <p>You have not won any items.  View <a href="{{url_for('auctions.list')}}">Auctions</a> to start bidding.</p>
+    {% else %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Auction ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item_won in items_won %}
+                <tr>
+                    <th scope="row" class="align-middle">{{item_won.id}}</th>
+                    <td class="align-middle"><a href="/auction-items/{{item_won.id}}">{{item_won.name}}</a></td>
+                    <td class="align-middle">
+                        {% if item_won.has_paid %}
+                            <span class="text-success">PAID</span>
+                        {% else %}
+                            <a class="btn btn-warning" role="button" href="{{ url_for('payments.payment', auction_item_id=item_won.id) }}">Payment Required</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

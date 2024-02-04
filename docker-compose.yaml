@@ -9,5 +9,6 @@ services:
       - STRIPE_PRIVATE_KEY=sk_test_somevalue
       - DOMAIN=http://localhost:4000
       - SERVER_TOKEN=testServerToken
+      - IS_DEMO=false
     ports:
       - "4000:5000"

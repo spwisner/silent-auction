@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, abort
 from flask_login import login_user, login_required, logout_user, current_user
 from silentauction import db
-from silentauction.models import User
+from silentauction.models import User, AuctionItem, Bid
 from silentauction.users.forms import LoginForm, RegistrationForm
+from datetime import datetime
 
 users_blueprint = Blueprint('users', __name__,
                             template_folder='templates/users')
@@ -58,3 +59,20 @@ def logout():
 def settings_user_profile():
     return render_template('settings_user_profile.html')
 
+
+@users_blueprint.route('/settings/items-won')
+@login_required
+def items_won():
+    current_time = datetime.utcnow()
+
+    auction_items = AuctionItem.query.filter(AuctionItem.auction_end < current_time).all()
+
+    items_won = []
+    for auction_item in auction_items:
+        highest_bid = Bid.query.filter_by(auction_item_id=auction_item.id).order_by(Bid.amount.desc()).first()
+        if highest_bid is not None:
+            highest_bid_user_id = highest_bid.user_id
+            if highest_bid_user_id == current_user.id:
+                items_won = [*items_won, auction_item]
+
+    return render_template('items_won.html', items_won=items_won)
