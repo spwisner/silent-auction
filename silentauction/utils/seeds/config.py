@@ -54,12 +54,18 @@ seeds_config = {
                 {
                     "ref_id": "item2",
                     "name": "Signed Liverpool FC Jersey",
-                    "description": "This signed Liverpool FC jersey is a must-have for any fan of the team. The jersey is in excellent condition and features the signatures of several players, including Steven Gerrard and Jamie Carragher. Don't miss out on the opportunity to own this unique piece of sports memorabilia.",
+                    "description": "This signed Liverpool FC jersey is a must-have for any fan of the team. The jersey is in excellent condition and features the signature of Virgil Van Dyke. Don't miss out on the opportunity to own this unique piece of sports memorabilia.",
                     "starting_bid": 99.00,
                     "bid_interval": 10.00,
                     "auction_start": now_plus_days_datetime(days=1, hours=2, seconds=35, minutes=15),
                     "auction_end": now_plus_days_datetime(days=45, hours=8, seconds=10, minutes=45),
-                    "photos": []
+                    "photos": [
+                        {
+                            "filename": "auction-item-photos/lfc-signed-jersey/lfc-signed-1.png",
+                            "category": "AUCTION_ITEM", 
+                            "subcategory": "ITEM_PHOTO"
+                        },
+                    ]
                 },
                 {
                     "ref_id": "item3",
@@ -68,7 +74,13 @@ seeds_config = {
                     "starting_bid": 99.00,
                     "bid_interval": 10.00,
                     "auction_end": now_plus_days_datetime(days=0, hours=0, seconds=0, minutes=1),
-                    "photos": []
+                    "photos": [
+                        {
+                            "filename": "auction-item-photos/red-sox-tickets/red-sox-tickets-1.png",
+                            "category": "AUCTION_ITEM", 
+                            "subcategory": "ITEM_PHOTO"
+                        },
+                    ]
                 }
             ]
         },

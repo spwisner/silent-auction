@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <div>
+  <style>
+    .carousel-control-prev,
+    .carousel-control-next {
+        background-color: black !important;
+        opacity: 0.5 !important;
+    }
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        background-color: black !important;
+        opacity: 0.5 !important;
+    }
+  </style>
   <h1>{{auction_item.name}}</h1>
   <h5 class="text-body-secondary">Auction Ends: {{auction_item.readable_auction_end()}}</h5>
   <div class="d-flex flex-column flex-md-row justify-content-md-evenly w-100 my-2" >
@@ -88,13 +100,6 @@
     <h3>Item description</h3>
     <p>{{auction_item.description}}</p>
   </div>
-  <!-- <div>
-    <h3>Auction Item</h3>
-    <p>Auction Start = {{auction_item.readable_auction_start()}}</p>
-    <p>Auction End = {{auction_item.readable_auction_end()}}</p>
-    <p>Starting Bid = ${{auction_item.starting_bid}}</p>
-    <p>Bid Interval = ${{auction_item.bid_interval}}</p>
-  </div> -->
 </div>
 {% endblock %}
 
