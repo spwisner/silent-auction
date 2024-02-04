@@ -4,9 +4,9 @@
   <h2>{{auction.name}}</h2>
   <div>
     <p>{{auction.description}}</p>
-    <p>Total Items: {{auction_items.count()}}</p>
   </div>
   <h3>Auction Items</h3>
+  <p>Total Items: {{auction_items.count()}}</p>
   <div class="d-flex flex-wrap">
     {% if auction_items.count() > 0 %}
       {% for auction_item in auction_items %}
