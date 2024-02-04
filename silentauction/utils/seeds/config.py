@@ -6,7 +6,6 @@ fa_desc = "Feeding America is a prominent nonprofit organization dedicated to al
 uww_desc = "United Way Worldwide is a renowned international charitable organization dedicated to addressing pressing social issues and improving communities around the globe. Founded in 1887, the organization has grown into a vast network of local United Way chapters in nearly 40 countries and territories. United Way Worldwide focuses on collaborative community impact, bringing together governments, businesses, nonprofit organizations, and individuals to create lasting solutions to societal challenges.\nOne of the distinctive features of United Way is its emphasis on community-based solutions tailored to the unique needs of each locality. By conducting extensive research and needs assessments, United Way identifies key issues affecting communities, such as education, health, and financial stability, and works strategically to address them. The organization leverages partnerships and volunteer engagement to maximize its impact, emphasizing the collective power of individuals coming together for the greater good.\nUnited Way's fundraising efforts support a wide range of initiatives, from early childhood education programs to emergency relief efforts during natural disasters. The organization's commitment to transparency and accountability ensures that donor contributions are utilized efficiently and effectively to drive positive change. With a vision of creating a world where every person has the opportunity to live a fulfilling life, United Way Worldwide continues to inspire collaboration and philanthropy on a global scale."
 
 # Auction Item Descriptions
-vase_desc = "The centerpiece of the upcoming auction is an exquisite vase that captures the essence of timeless elegance and artistic craftsmanship. This remarkable piece, poised to allure discerning collectors and enthusiasts alike, stands as a testament to the mastery of its creator. Crafted with meticulous precision, the vase seamlessly blends classical aesthetics with contemporary sensibilities, making it a rare gem in the realm of decorative art. Fashioned from the finest porcelain, the vase boasts a delicate yet durable form that gracefully curves upward, creating a silhouette reminiscent of classical Grecian urns. Its surface is adorned with intricate hand-painted patterns, each stroke revealing the artisan's dedication to detail. The color palette, a harmonious fusion of soft pastels and rich metallic accents, enhances the vase's allure, adding depth and sophistication to its overall appearance. What sets this vase apart is its unique blend of tradition and innovation. While its design pays homage to historical art movements, the vase incorporates modern elements, making it a versatile and captivating addition to any collection. The artist's signature, discreetly inscribed on the base, further adds to the provenance and exclusivity of this exceptional piece."
 jc_letter_desc = "This framed photograph features a beloved comedy icon and is a must-have for any fan of the movie 'Nothing But Trouble.' The signature of John Candy, who starred in the film, adds a unique touch to this original piece of entertainment memorabilia. The photograph is in excellent condition and would make a great addition to any collection of autographs or photographs. Don't miss out on the opportunity to own this one-of-a-kind item."
 
 seeds_config = {
@@ -37,15 +36,15 @@ seeds_config = {
             "auction_items": [
                 {
                     "ref_id": "item1",
-                    "name": "Vase",
-                    "description": vase_desc,
-                    "starting_bid": 10.00,
-                    "bid_interval": 5.00,
+                    "name": "Apple MacBook Air 15\"",
+                    "description": "This Apple MacBook Air laptop is a great choice for casual computing. It has a powerful Apple M2 processor and 8GB of RAM, making it capable of handling various tasks smoothly. The laptop operates on macOS 13.0 Ventura and has a storage capacity of 256GB SSD.",
+                    "starting_bid": 900.00,
+                    "bid_interval": 20.00,
                     "auction_start": None,
                     "auction_end": None,
                     "photos": [
                         {
-                            "filename": "auction-item-photos/vase/vase-1.png",
+                            "filename": "auction-item-photos/macbook-air/macbook-img1.png",
                             "category": "AUCTION_ITEM", 
                             "subcategory": "ITEM_PHOTO"
                         },
@@ -67,30 +66,7 @@ seeds_config = {
                         },
                     ]
                 },
-                {
-                    "ref_id": "item3",
-                    "name": "Red Sox Tickets",
-                    "description": "This pair of Red Sox tickets is a great opportunity to see the team in action at Fenway Park. The tickets are for a game against the New York Yankees and are located in the grandstand section. Don't miss out on the chance to experience the excitement of a Red Sox game from the stands.",
-                    "starting_bid": 99.00,
-                    "bid_interval": 10.00,
-                    "auction_end": now_plus_days_datetime(days=0, hours=0, seconds=0, minutes=1),
-                    "photos": [
-                        {
-                            "filename": "auction-item-photos/red-sox-tickets/red-sox-tickets-1.png",
-                            "category": "AUCTION_ITEM", 
-                            "subcategory": "ITEM_PHOTO"
-                        },
-                    ]
-                }
-            ]
-        },
-        {
-            "ref_id": "auction2",
-            "name": "Feeding America",
-            "category": "Domestic Needs",
-            "description": fa_desc,
-            "auction_items": [
-                {
+{
                     "ref_id": "item4",
                     "name": "John Candy Signed Letter from Warner Brothers",
                     "description": jc_letter_desc,
@@ -124,6 +100,61 @@ seeds_config = {
                             "category": "AUCTION_ITEM", 
                             "subcategory": "ITEM_PHOTO"
                         }
+                    ]
+                },
+                {
+                    "ref_id": "item5",
+                    "name": "Givenchy Amarige Eau de Toilette Spray",
+                    "description": "Amarige for Her Eau de Toilette embodies the heart of femininity with soft, sweet notes like rosewood, gardenia, and acacia. This women's perfume reveals the pleasures of life and the simplicity of joyful moments with its sweet notes evocating the shores of the Mediterranean.",
+                    "starting_bid": 35.00,
+                    "bid_interval": 2.00,
+                    "auction_start": None,
+                    "auction_end": None,
+                    "photos": [
+                        {
+                            "filename": "auction-item-photos/eau-de-spray/eau-img1.png",
+                            "category": "AUCTION_ITEM", 
+                            "subcategory": "ITEM_PHOTO"
+                        },
+                    ]
+                },
+                {
+                    "ref_id": "item6",
+                    "name": "Julie Vos Penelope Delicate Bracelet",
+                    "description": "Luxurious Julie Vos Penelope Delicate Bracelet Size: Adjustable length 6\" - 6.5\" - 7\". 24K gold plate and freshwater pearls.",
+                    "starting_bid": 60.00,
+                    "bid_interval": 3.00,
+                    "auction_start": None,
+                    "auction_end": None,
+                    "photos": [
+                        {
+                            "filename": "auction-item-photos/jvp_delicate_bracelet/jvp_b_img1.png",
+                            "category": "AUCTION_ITEM", 
+                            "subcategory": "ITEM_PHOTO"
+                        },
+                    ]
+                }
+            ]
+        },
+        {
+            "ref_id": "auction2",
+            "name": "Feeding America",
+            "category": "Domestic Needs",
+            "description": fa_desc,
+            "auction_items": [
+                {
+                    "ref_id": "item3",
+                    "name": "Red Sox Tickets",
+                    "description": "This pair of Red Sox tickets is a great opportunity to see the team in action at Fenway Park. The tickets are for a game against the New York Yankees and are located in the grandstand section. Don't miss out on the chance to experience the excitement of a Red Sox game from the stands.",
+                    "starting_bid": 99.00,
+                    "bid_interval": 10.00,
+                    "auction_end": now_plus_days_datetime(days=0, hours=0, seconds=0, minutes=1),
+                    "photos": [
+                        {
+                            "filename": "auction-item-photos/red-sox-tickets/red-sox-tickets-1.png",
+                            "category": "AUCTION_ITEM", 
+                            "subcategory": "ITEM_PHOTO"
+                        },
                     ]
                 }
             ]

@@ -6,26 +6,28 @@
     <p>{{auction.description}}</p>
   </div>
   <h3>Auction Items</h3>
-  <p>Total Items: {{auction_items.count()}}</p>
-  <div class="d-flex flex-wrap">
-    {% if auction_items.count() > 0 %}
-      {% for auction_item in auction_items %}
-        <div class="card m-3" style="width: 250px">
-          <div class="d-flex justify-content-center">
-            <img class="card-img-top p-2" style="object-fit: cover; height: 250px;"src="{{ url_for('static', filename=auction_photos[loop.index -1].filename) }}"  alt="...">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">{{auction_item.name}}</h5>
-            <p class="card-text">{{auction_item.description[:97]}}...</p>
-          </div>
-          <div class="d-flex justify-content-center mb-2">
-            <a href="/auction-items/{{auction_item.id}}" class="btn btn-primary">View</a>
-          </div>
-        </div>
-      {% endfor %}
-    {% else %}
-      <p>No auction items. Please check back later.</p>
-    {% endif %}
-  </div>
+  {% if auction_items.count() > 0 %}
+    <p>Total Items: {{auction_items.count()}}</p>
+    <div class="d-flex flex-wrap justify-content-sm-center">
+      <div class="d-flex flex-wrap justify-content-sm-center justify-content-lg-start" style="max-width: 1200px;">
+          {% for auction_item in auction_items %}
+            <div class="card m-3" style="width: 250px">
+              <div class="d-flex justify-content-center">
+                <img class="card-img-top p-2" style="object-fit: cover; height: 250px;"src="{{ url_for('static', filename=auction_photos[loop.index -1].filename) }}"  alt="image for auction item">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{auction_item.name}}</h5>
+                <p class="card-text">{{auction_item.description[:97]}}...</p>
+              </div>
+              <div class="d-flex justify-content-center mb-2">
+                <a href="/auction-items/{{auction_item.id}}" class="btn btn-primary">View</a>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <p>No items found for this auction. Please check back later.</p>
+  {% endif %}
 </div>
 {% endblock %}

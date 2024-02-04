@@ -53,16 +53,27 @@
       <div class="card w-50">
         <div class="card-body">
           <h5 class="card-title">Auction Item #{{auction_item.id}}</h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary"><a href="{{url_for('auctions.view_auction', auction_id=auction.id)}}">{{auction.name}}</a></h6>
+          <p class="card-subtitle mb-2 text-body-secondary"><a style="text-decoration: none!important;" href="{{url_for('auctions.view_auction', auction_id=auction.id)}}">{{auction.name}}</a></p>
           <div>
-            <!-- <p>Bid Interval = ${{auction_item.bid_interval}}</p> -->
-            {% if top_bid_summary and top_bid_summary.bids_count > 0 %}
-              <p>Total bids: {{top_bid_summary.bids_count}}</p>
-              <p>Current bid: {{top_bid_summary.amount}}</p>
-              <p>Bid By: {{top_bid_summary.username}}</p>
-            {% else %}
-              <p>Total bids: 0</p> 
-            {% endif %}
+            <div class="d-flex flex-column my-2">
+                {% if top_bid_summary and top_bid_summary.bids_count > 0 %}
+                  
+                  <p class="mb-1" style="text-decoration: underline;">
+                    <span>{{top_bid_summary.bids_count}}</span>
+                    <span>
+                      {% if top_bid_summary and top_bid_summary.bids_count == 1 %}
+                        Bid
+                      {% else %}
+                        Bids
+                      {% endif %}
+                    </span>
+                  </p>
+                  <h5 class="mb-1">${{top_bid_summary.amount}}</h5>
+                  <p class="mb-1"><i class="bi bi-person-circle"></i> {{top_bid_summary.username}}</p>
+                {% else %}
+                <p class="mb-1" style="text-decoration: underline;">0 Bids</p>
+                {% endif %}
+            </div>
             {% if is_auction_item_active %}
               {% if current_user.is_authenticated %}
                 <div class="d-flex">
