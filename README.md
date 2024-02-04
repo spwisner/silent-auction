@@ -45,3 +45,9 @@ HEADERS:
     Authorization: "<SERVER_TOKEN_ENV_VAR_VALUE>"
 }
 ```
+PAYLOAD: 
+```
+{
+    should_reset_stripe: boolean
+}
+```

@@ -2,3 +2,4 @@ docker-compose.override.yaml
 __pycache__
 data.sqlite
 .DS_Store
+todo.md

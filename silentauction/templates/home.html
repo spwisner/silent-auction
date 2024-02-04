@@ -7,7 +7,9 @@
       <div class="col d-flex flex-column align-items-start gap-2">
         <h2 class="fw-bold text-body-emphasis">Where Every Bid Speaks Volumes</h2>
         <p class="text-body-secondary">Discover the thrill of bidding without a word at Silent Auction, your premier destination for exclusive online silent auctions. Immerse yourself in a world of curated treasures, unforgettable experiences, and the joy of securing unique items—all while contributing to meaningful causes.</p>
-        <a href="{{url_for('users.register')}}" class="btn btn-primary btn-lg">Sign up!</a>
+        {% if not current_user.is_authenticated %}
+          <a href="{{url_for('users.register')}}" class="btn btn-primary btn-lg">Sign up!</a>
+        {% endif %}
       </div>
 
       <div class="col">

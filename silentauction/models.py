@@ -34,6 +34,9 @@ class Photo(db.Model):
         self.created_at = created_at or datetime.utcnow()
         self.updated_at = updated_at or datetime.utcnow()
 
+    def __repr__(self):
+        return f"Photo filename is {self.filename}"
+
     def photo_category(self, categoryName):
         allowed_categories = ['USER', 'AUCTION', 'AUCTION_ITEM']
         if categoryName not in allowed_categories:
@@ -83,7 +86,7 @@ class User (db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
     
     def __repr__(self):
-        return f"User has email {self.email}"
+        return f"User username is {self.username}"
 
 class Auction (db.Model):
     __tablename__ = "auctions"
@@ -185,3 +188,6 @@ class Bid(db.Model):
         self.updated_at = updated_at or datetime.utcnow()
         self.auction_item_id = auction_item_id
         self.user_id = user_id
+
+    def __repr__(self):
+        return f"Bid amount is {self.amount}"
