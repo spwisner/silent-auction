@@ -12,12 +12,6 @@ def bid_successful():
 
 @bids_blueprint.route('/add', methods=['GET', 'POST'])
 def add():
-    bid = False
-    is_max_bid = False
-    alerts = False
-    interest = False
-    feedback = False
-
     form = AddForm()
 
     if form.validate_on_submit():

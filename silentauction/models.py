@@ -143,14 +143,6 @@ class AuctionItem(db.Model):
     auction_id = db.Column(db.Integer,db.ForeignKey('auctions.id'), nullable=False)
     auction_item_photos = db.relationship('Photo',backref='auction_item_photos',lazy='dynamic')
 
-    # created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    # updated_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    # auction = db.relationship('Auction', backref='auction', uselist=False) # uselist = False because 1 to 1 and not 1 to many
-    # 1 to many
-    # bids = db.relationship('Bid', backref='auctionItem', lazy='dynamic') #lazy describes how items should be loaded
-    # 1 to 1
-    # owner = db.relationship('Owner', backref='itemOwner', uselist=False) # uselist = False because 1 to 1 and not 1 to many
-
     def __init__(self, name, auction_id, description, starting_bid, bid_interval, auction_start=None, auction_end=None, created_at=None, updated_at=None):
         self.name = name
         self.auction_id = auction_id

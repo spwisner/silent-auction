@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from silentauction import db
 from silentauction.models import Auction, AuctionItem, Photo, Bid, User
-from silentauction.auction_items.forms import BidForm
 from datetime import datetime
 from flask_login import current_user
 

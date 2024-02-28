@@ -1,7 +1,7 @@
 import os
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session, abort, jsonify
-from flask_login import login_user, login_required, logout_user, current_user
-from silentauction.models import Auction, AuctionItem, Photo, Bid, User
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask_login import login_required, current_user
+from silentauction.models import AuctionItem, Bid
 from silentauction import db, app
 from silentauction.auction_items.views import get_highest_bid, get_top_bid_summary
 import stripe

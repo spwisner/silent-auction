@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, redirect, url_for
-from silentauction.auctions.forms import CreateForm
+from flask import Blueprint, render_template
+# from silentauction.auctions.forms import CreateForm
 from silentauction import db
 from silentauction.models import Auction, AuctionItem, Photo
 
@@ -12,25 +12,22 @@ def list():
     auctions = Auction.query.all()
     auctions_count = Auction.query.count()
 
-    # auctions = [auctions(obj.auction_start, convert_to_readable_datetime(obj.auction_start)) for obj in auctions]
-    # auctions = [auctions(obj.auction_end, convert_to_readable_datetime(obj.auction_end)) for obj in auctions]
-
     return render_template('list.html', auctions=auctions, auctions_count=auctions_count)
 
 
-@auctions_blueprint.route('/create', methods=['POST', 'GET'])
-def create():
-    form = CreateForm()
+# @auctions_blueprint.route('/create', methods=['POST', 'GET'])
+# def create():
+#     form = CreateForm()
 
-    if form.validate_on_submit():
-        name = form.name.data
-        new_auction = Auction(name)
-        db.session.add(new_auction)
-        db.session.commit()
+#     if form.validate_on_submit():
+#         name = form.name.data
+#         new_auction = Auction(name)
+#         db.session.add(new_auction)
+#         db.session.commit()
 
-        return redirect(url_for('auctions.list'))
+#         return redirect(url_for('auctions.list'))
     
-    return render_template('create.html', form=form)
+#     return render_template('create.html', form=form)
 
 default_auction_photo = {
     "id": -1,
