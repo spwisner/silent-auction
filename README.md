@@ -30,7 +30,7 @@ Silent auction is a demo Python Flask app where charities can post items for a s
 
 ### Payment
 
-To demo the payment feature, view http://localhost:4000/payments/1 and use the following test payment values:
+To demo the payment feature, view http://localhost:5001/payments/1 and use the following test payment values:
 - Card Number: `4242 4242 4242 4242`
 - Exp: `12/34`
 - CVC: `123`
@@ -38,7 +38,7 @@ To demo the payment feature, view http://localhost:4000/payments/1 and use the f
 ### API
 You can reset the demo application remotely with a call to the REST API:
 
-POST http://localhost:4000/api/demo-reset
+POST http://localhost:5001/api/demo-reset
 HEADERS:
 ```
 {
