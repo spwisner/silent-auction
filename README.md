@@ -1,8 +1,19 @@
 # Silent Auction
 
-Silent auction is a demo Python Flask app where charities can post items for a silent auction and members can bid.
+Silent auction is a demo Python Flask app where charities can post items for a silent auction and members can bid.  Highlighted Technologies include:
+- Python
+- Flask
+- SQLAlchemy
+- Stripe
+- Docker
+- Bootstrap
+- Jinja Templates
+- JavaScript
+- CSS
 
 ## Getting Stared
+
+To start up container, run `docker compose up -d --build`.
 
 ## Database
 
@@ -35,6 +46,10 @@ To demo the payment feature, view http://localhost:5001/payments/1 and use the f
 - Exp: `12/34`
 - CVC: `123`
 
+Note that the following environment variables are required for payments to be received:
+- STRIPE_PUBLIC_KEY
+- STRIPE_PRIVATE_KEY
+
 ### API
 You can reset the demo application remotely with a call to the REST API:
 
@@ -51,3 +66,9 @@ PAYLOAD:
     should_reset_stripe: boolean
 }
 ```
+
+## Demo Notes
+
+The demo include seeds to be able to interact with auction items and payment options (via Stripe).  The seed values can be viewed in `silentauction/utils/seeds/config.py`.
+
+Furthermore, [Auction 1](http://localhost:5001/auctions/1) is configured for auctions that are in progress, [Auction 2](http://localhost:5001/auctions/2) contains auction items that have concluded or have been won by an auction demo user and [Auction 3](http://localhost:5001/auctions/3) contains an auction without any auction items.
